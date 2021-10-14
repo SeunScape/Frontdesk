@@ -5,6 +5,10 @@ import Login from './components/auth/login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import {PrivateRoute} from './privateRoute';
 import Staff from './components/Dashboard/Staff/Staff';
+import CreateStaff from './components/Dashboard/Staff/CreateStaff/CreateStaff';
+import Forgetpassword from './components/auth/Forgetpassword/Forgetpassword';
+import Verify from './components/auth/Forgetpassword/verify';
+import Reset from './components/auth/Forgetpassword/Reset';
 
 class Routes extends React.Component {
 constructor(props) {
@@ -20,7 +24,11 @@ constructor(props) {
                 <Switch>
                     <Route path="/register" component={Signup}/>
                     <Route path="/login" component={Login}/>
-                    <Route path="/staff" component={Staff}/>
+                    <Route path="/forgetpassword" component={Forgetpassword}/>
+                    <Route path="/verify" component={Verify}/>
+                    <Route path="/reset" component={Reset}/>
+                    <PrivateRoute path="/staff" component={Staff}/>
+                    <PrivateRoute path="/createstaff" component={CreateStaff}/>
                     <PrivateRoute path="/" component={Dashboard}/>
                 </Switch>
             </div>

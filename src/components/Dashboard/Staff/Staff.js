@@ -1,111 +1,144 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import Navbar from '../Navbar/Navbar';
 import SideNavigation from '../SideNav/SideNavigation';
+import axios from 'axios';
+
 
 class Staff extends React.Component {
 constructor(props) {
     super(props);
 
     this.state = {
+        users: [],
+        isLoading: false,
+        isError: false
     };
 }
-
-    render() {
+componentDidMount(){
+    const config = {
+        headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+    };
+   axios.get('staff', config).then(
+        res => {
+            this.setState({
+                users:res.data.data,
+                isLoading: false
+            })
+            console.log(res)
+        },
+        err => {
+            this.setState({isError: true, isLoading: false})
+        }
+   )
+} 
+renderTableRows = () => {
+    return this.state.users.map(user => {
         return (
-        <div>
+            <tr key={user.id}>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.phone}</td>
+                <td>{user.position}</td>
+                <td>{user.address}</td>
+                <td>{user.salary}</td>
+                <td>{user.start_date}</td>
+            </tr>
+        )
+    })
+}
+    render() {
+        const {users,isLoading, isError} = this.state
+        return users.length > 0 
+        ? (
             <div className="main-wrapper main-wrapper-1">
                 <Navbar/>
                 <SideNavigation/>
                 <div className="main-content">
-                    <section className="section">
-                    <div className="section-header">
-                        <h1>Staff</h1>
-                    </div>
-                    <div className="card">
-                        <div className="card-header">
-                        <h4>Full Width</h4>
-                        </div>
-                        <div className="card-body p-0">
-                        <div className="table-responsive">
-                            <table className="table table-striped table-md">
-                            <tbody><tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Created At</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                                </tr>
-                                <tr>
-                                <td>1</td>
-                                <td>Irwansyah Saputra</td>
-                                <td>2017-01-09</td>
-                                <td>
-                                    <div className="badge badge-success">Active</div>
-                                </td>
-                                <td><a href="#" className="btn btn-primary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                <td>2</td>
-                                <td>Hasan Basri</td>
-                                <td>2017-01-09</td>
-                                <td>
-                                    <div className="badge badge-success">Active</div>
-                                </td>
-                                <td><a href="#" className="btn btn-primary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                <td>3</td>
-                                <td>Kusnadi</td>
-                                <td>2017-01-11</td>
-                                <td>
-                                    <div className="badge badge-danger">Not Active</div>
-                                </td>
-                                <td><a href="#" className="btn btn-primary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                <td>4</td>
-                                <td>Rizal Fakhri</td>
-                                <td>2017-01-11</td>
-                                <td>
-                                    <div className="badge badge-success">Active</div>
-                                </td>
-                                <td><a href="#" className="btn btn-primary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                <td>5</td>
-                                <td>Isnap Kiswandi</td>
-                                <td>2017-01-17</td>
-                                <td>
-                                    <div className="badge badge-success">Active</div>
-                                </td>
-                                <td><a href="#" className="btn btn-primary">Detail</a></td>
-                                </tr>
-                            </tbody></table>
-                        </div>
-                        </div>
-                        <div className="card-footer text-right">
-                        <nav className="d-inline-block">
-                            <ul className="pagination mb-0">
-                            <li className="page-item disabled">
-                                <a className="page-link" href="#" tabIndex={-1}><i className="fas fa-chevron-left" /></a>
-                            </li>
-                            <li className="page-item active"><a className="page-link" href="#">1 <span className="sr-only">(current)</span></a></li>
-                            <li className="page-item">
-                                <a className="page-link" href="#">2</a>
-                            </li>
-                            <li className="page-item"><a className="page-link" href="#">3</a></li>
-                            <li className="page-item">
-                                <a className="page-link" href="#"><i className="fas fa-chevron-right" /></a>
-                            </li>
-                            </ul>
-                        </nav>
-                        </div>
-                    </div>
-                    </section>
+                <section className="section">
+                <div className="section-header">
+                <h1>Posts</h1>
+                <div className="section-header-button">
+                    <Link to="createstaff" className="btn btn-primary">Add New</Link>
+                </div>
+                <div className="section-header-breadcrumb">
+                    <div className="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                    <div className="breadcrumb-item"><a href="#">Other Pages</a></div>
+                    <div className="breadcrumb-item">All Posts</div>
                 </div>
                 </div>
+                    <div className="section-body">
+                    <div className="row">
+                        <div className="col-12">
+                        <div className="card">
+                            <div className="card-header">
+                            <h4>Simple</h4>
+                            </div>
+                            <div className="card-body">
+                            <table className="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Position</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Salary</th>
+                                    <th scope="col">Start date</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {this.renderTableRows()}
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+                </div>
+
             </div>
-        );
+        ):(
+            <div className="main-wrapper main-wrapper-1">
+            <Navbar/>
+            <SideNavigation/>
+            <div className="main-content">
+                <section className="section">
+                <div className="section-header">
+                <h1>Posts</h1>
+                <div className="section-header-button">
+                    <Link to="createstaff" className="btn btn-primary">Add New</Link>
+                </div>
+                <div className="section-header-breadcrumb">
+                    <div className="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                    <div className="breadcrumb-item"><a href="#">Other Pages</a></div>
+                    <div className="breadcrumb-item">All Posts</div>
+                </div>
+                </div>
+
+                <div className="container mt-5">
+                    <div className="page-error">
+                    <div className="page-inner">
+                        <h1>No Users</h1>
+                        <div className="page-description">
+                        Create users from the create staff button
+                        </div>
+                        <div className="page-search">
+                        <div className="mt-3">
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </section>
+            </div>
+            </div>
+        )
     }
 }
 export default Staff;
+
