@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import Navbar from '../Navbar/Navbar';
 import SideNavigation from '../SideNav/SideNavigation';
 import axios from 'axios';
@@ -12,7 +12,7 @@ constructor(props) {
     this.state = {
         users: [],
         isLoading: false,
-        isError: false
+        isError: false,
     };
 }
 componentDidMount(){
@@ -25,19 +25,26 @@ componentDidMount(){
         res => {
             this.setState({
                 users:res.data.data,
-                isLoading: false
+                isLoading: false,
             })
-            console.log(res)
+            // console.log(res.data)
         },
         err => {
             this.setState({isError: true, isLoading: false})
         }
    )
 } 
+// const navigate = (id) => {
+//     history.push(`/workspace/${id}`)
+// }
+handleRowClick = (id) => {
+    const { history } = this.props;
+    history.push(`/viewstaff/${id}`);
+}
 renderTableRows = () => {
     return this.state.users.map(user => {
         return (
-            <tr key={user.id}>
+            <tr key={user.id} onClick={() => this.handleRowClick(user.id)}>  
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{user.phone}</td>
@@ -140,5 +147,5 @@ renderTableRows = () => {
         )
     }
 }
-export default Staff;
+export default withRouter(Staff);
 
