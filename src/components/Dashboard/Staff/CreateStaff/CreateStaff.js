@@ -43,7 +43,6 @@ handleItemClick =e =>{
                 const { history } = this.props;
                 history.push("/staff")
             }).catch(error => {
-                this.setState({alert_message:"error"})
                 
             })
 }
@@ -101,11 +100,11 @@ handleItemChange = e =>{
                                     </div>
                                     <div className="form-group row mb-4">
                                     <label className="col-form-label text-md-right col-12 col-md-3 col-lg-3">Address</label>
-                                    <div className="col-sm-12 col-md-7">
-                                        <textarea className="summernote-simple" defaultValue={""} name="address" onChange={this.handleItemChange}/>
-                                        <div class="invalid-feedback">
-                                            Please fill in the address
-                                        </div>
+                                    <div class="col-sm-12 col-md-7">
+                                    <input type="text" className="form-control" name="address" onChange={this.handleItemChange}/>
+                                    <div class="invalid-feedback">
+                                        Please fill in the Address
+                                    </div>
                                     </div>
                                     </div>
                                     <div className="form-group row mb-4">

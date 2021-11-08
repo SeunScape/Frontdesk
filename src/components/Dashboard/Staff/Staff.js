@@ -94,6 +94,7 @@ updateUser = () => {
         "start_date": this.state.date
     }
     console.warn("item",item)
+    const { history } = this.props;
     fetch(`https://itfrontdesk.herokuapp.com/api/staff/${id}`, {
       method: 'PUT',
       headers:{
@@ -104,23 +105,41 @@ updateUser = () => {
       body:JSON.stringify(item)
     })
     .then(response => response.json())
-    .then((responseJson) => console.log(responseJson))
+    .then((responseJson) => history.push("/staff"))
   .catch(error => console.log(error));
 }
+deleteUser = (id) => {
+    fetch(`https://itfrontdesk.herokuapp.com/api/staff/${id}`, {
+      method: 'DELETE',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      },
+    })
+    .then(function(){
+        window.location = "/staff"
+    })
+    .then((responseJson) => console.log(responseJson))
+  .catch(error => console.log(error));
+  }
 renderTableRows = () => {
     return this.state.users.map(user => {
         return (
             <>
-            {/* <tr key={user.id} onClick={() => this.handleRowClick(user.id)}>   */}
-            <tr>   
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
-                <td>{user.position}</td>
-                <td>{user.address}</td>
-                <td>{user.salary}</td>
-                <td>{user.start_date}</td>
-                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onClick={() => this.selectUser(user.id)}>Update</button></td>
+            <tr key={user.id}>  
+            {/* <tr>    */}
+                <td  onClick={() => this.handleRowClick(user.id)}>{user.name}</td>
+                <td  onClick={() => this.handleRowClick(user.id)}>{user.email}</td>
+                <td  onClick={() => this.handleRowClick(user.id)}>{user.phone}</td>
+                <td  onClick={() => this.handleRowClick(user.id)}>{user.position}</td>
+                <td  onClick={() => this.handleRowClick(user.id)}>{user.address}</td>
+                <td  onClick={() => this.handleRowClick(user.id)}>{user.salary}</td>
+                <td  onClick={() => this.handleRowClick(user.id)}>{user.start_date}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onClick={() => this.selectUser(user.id)}>Update</button> &nbsp;
+                    <button type="button" class="btn btn-dark" onClick={() => this.deleteUser(user.id)}>Delete</button>
+                </td>
             </tr>
             </>
         )
@@ -136,7 +155,7 @@ renderTableRows = () => {
                 <div className="main-content">
                 <section className="section">
                 <div className="section-header">
-                <h1>Posts</h1>
+                <h1>Staff</h1>
                 <div className="section-header-button">
                     <Link to="createstaff" className="btn btn-primary">Add New</Link>
                 </div>
