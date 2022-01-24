@@ -12,14 +12,19 @@ constructor(props) {
         email: '',
         password: '',
         c_password: '',
-        // firstnameError: '',
-        // lastnameError: '',
-        // emailError: '',
-        // passwordError: '',
-        // c_passwordError: '',
+        loading: '',
+        firstnameValid: false,     
+        lastnameValid: false, 
+        emailValid: false, 
+        passwordValid: false, 
+        c_passwordValid: false, 
+        submitDisabled: true 
     };
 }
     onClick = e => {
+      this.setState({
+        loading: true
+      });
         e.preventDefault();
         const data = {
           first_name: this.state.firstname,
@@ -33,12 +38,15 @@ constructor(props) {
       axios.post('register', data)
       .then(res => {
           localStorage.setItem('token', res.data.data.token)
+          this.setState({loading: false});  
             const { history } = this.props;
               history.push("/dashboard")
           // console.log(res.data.data.token)
       })
       .catch(err => {
-
+        this.setState({
+          loading:false
+      })
       })
     }
     // }
@@ -100,12 +108,53 @@ constructor(props) {
     //   }
     //   return true;
     // }
-    onChange = e =>{
-        this.setState({
-              [e.target.name]:e.target.value
-            })
+    // onChange = e =>{
+    //     this.setState({
+    //           [e.target.name]:e.target.value
+    //         })
+    // }
+    onFirstnameChange= e => {
+      let firstnameValid = e.target.value ? true : false;       
+      let submitValid = this.state.emailValid && this.state.lastname && this.state.passwordValid && this.state.c_passwordValid && firstnameValid
+      this.setState({
+       firstname: e.target.value,
+       firstnameValid: firstnameValid, 
+       submitDisabled: !submitValid});
+    }
+    onLastnameChange= e => {
+      let lastnameValid = e.target.value ? true : false;       
+      let submitValid = this.state.firstnameValid && this.state.emailValid && this.state.passwordValid && this.state.c_passwordValid && lastnameValid
+      this.setState({
+       lastname: e.target.value,
+       lastnameValid: lastnameValid, 
+       submitDisabled: !submitValid});
+    }
+    onEmailChange= e => {
+      let emailValid = e.target.value ? true : false;       
+      let submitValid = this.state.firstnameValid && this.state.lastnameValid && this.state.passwordValid && this.state.c_passwordValid && emailValid
+      this.setState({
+       email: e.target.value,
+       emailValid: emailValid, 
+       submitDisabled: !submitValid});
+    }
+    onPasswordChange= e => {
+      let passwordValid = e.target.value ? true : false;       
+      let submitValid = this.state.firstnameValid && this.state.lastnameValid && this.state.emailValid && this.state.c_passwordValid && passwordValid
+      this.setState({
+       password: e.target.value,
+       passwordValid: passwordValid, 
+       submitDisabled: !submitValid});
+    }
+    onCpasswordChange= e => {
+      let c_passwordValid = e.target.value ? true : false;       
+      let submitValid = this.state.firstnameValid && this.state.lastnameValid && this.state.emailValid && this.state.passwordValid && c_passwordValid
+      this.setState({
+       c_password: e.target.value,
+       c_passwordValid: c_passwordValid, 
+       submitDisabled: !submitValid});
     }
     render() {
+      const {loading} = this.state;
         return (
             <div>
   <div id="app">
@@ -122,14 +171,14 @@ constructor(props) {
                   <div className="row">
                     <div className="form-group col-6">
                       <label htmlFor="frist_name">First Name</label>
-                      <input id="frist_name" type="text" className="form-control" name="firstname" onChange={this.onChange} autofocus />
+                      <input id="frist_name" type="text" className="form-control" name="firstname" value={this.state.firstname} onChange={this.onFirstnameChange} autofocus />
                       <div className="invalid-feedback">
                         What's your name?
                       </div>
                     </div>
                     <div className="form-group col-6">
                       <label htmlFor="last_name">Last Name</label>
-                      <input id="last_name" type="text" className="form-control" name="lastname" onChange={this.onChange}/>
+                      <input id="last_name" type="text" className="form-control" name="lastname" value={this.state.lastname} onChange={this.onLastnameChange}/>
                       <div class="invalid-feedback">
                           What's your lastname?
                         </div>
@@ -137,7 +186,7 @@ constructor(props) {
                   </div>
                   <div className="form-group">
                     <label htmlFor="email">Email</label>
-                    <input id="email" type="email" className="form-control" name="email" onChange={this.onChange} tabIndex={1} required autofocus/>
+                    <input id="email" type="email" className="form-control" name="email" value={this.state.email} onChange={this.onEmailChange} tabIndex={1} required autofocus/>
                     <div className="invalid-feedback">
                       Please fill in your email
                     </div>
@@ -145,7 +194,7 @@ constructor(props) {
                   <div className="row">
                     <div className="form-group col-6">
                       <label htmlFor="password" className="d-block">Password</label>
-                      <input id="password" type="password" className="form-control pwstrength" data-indicator="pwindicator" name="password" onChange={this.onChange}/>
+                      <input id="password" type="password" className="form-control pwstrength" data-indicator="pwindicator" name="password" value={this.state.password} onChange={this.onPasswordChange}/>
                       <div id="pwindicator" className="pwindicator">
                         <div className="bar" />
                         <div className="label" />
@@ -153,7 +202,7 @@ constructor(props) {
                     </div>
                     <div className="form-group col-6">
                       <label htmlFor="password2" className="d-block">Password Confirmation</label>
-                      <input id="password2" type="password" className="form-control" name="c_password" onChange={this.onChange} />
+                      <input id="password2" type="password" className="form-control" name="c_password" value={this.state.c_password} onChange={this.onCpasswordChange} />
                     </div>
                   </div>
                   <div className="form-group">
@@ -163,10 +212,12 @@ constructor(props) {
                     </div>
                   </div>
                   <div className="form-group">
-                    {/* <button type="submit" className="btn btn-primary btn-lg btn-block">
-                      Register
-                    </button> */}
-                    <input type="submit" value="Register" className="btn btn-primary btn-lg btn-block" tabIndex={4}/>
+                    <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={loading, this.state.submitDisabled}>
+                    { loading &&  <div className="spinner-border" role="status"></div>}
+                      {/* { loading && <span className="radious" style={{color:"white"}}>Logging in..</span>} */}
+                      { !loading && <span style={{color:"white"}}>Register</span>}
+                    </button>
+                    {/* <input type="submit" value="Register" className="btn btn-primary btn-lg btn-block" tabIndex={4}/> */}
                   </div>
                 </form>
               </div>

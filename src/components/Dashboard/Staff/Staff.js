@@ -44,7 +44,7 @@ componentDidMount(){
                 date: res.data.data[0].date,
                 id: res.data.data[0].id,
             })
-            // console.log( res.data.data[0].name)
+            console.log( res.data.data)
         },
         err => {
             this.setState({isError: true, isLoading: false})
@@ -71,7 +71,7 @@ selectUser = (id) => {
                 date: res.data.data.date,
                 id: res.data.data.id
             })
-            // console.log(res.data)
+            console.log(res.data)
         },
         err => {
         }
@@ -162,7 +162,7 @@ renderTableRows = () => {
                 <div className="section-header-breadcrumb">
                     <div className="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div className="breadcrumb-item"><a href="#">Other Pages</a></div>
-                    <div className="breadcrumb-item">All Posts</div>
+                    <div className="breadcrumb-item">All Staff</div>
                 </div>
                 </div>
                     <div className="section-body">

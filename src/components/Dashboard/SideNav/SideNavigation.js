@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-
-
+import {Link} from 'react-router-dom'
 class SideNavigation extends React.Component {
 constructor(props) {
     super(props);
@@ -14,46 +12,44 @@ Logout =() => {
     const { history } = this.props;
             history.push("/login")
 }
-
     render() {
         return (
-            <div>
-            <div className="main-sidebar sidebar-style-2">
-                <aside id="sidebar-wrapper">
-                <div className="sidebar-brand">
-                    <Link to ="index.html">
-                    <img alt="image" src="assets/img/logo.png" className="header-logo" />
-                    <span className="logo-name">Ality</span>
-                    </Link>
-                </div>
-                <ul className="sidebar-menu">
-                    <li className="menu-header">Main</li>
-                    <li className="dropdown active">
-                    <Link to="/dashboard" className="nav-link has-dropdown"><i className="fas fa-home" /><span>Dashboard</span></Link>
-                    </li>
-                    <li className="dropdown">
-                    <Link to ="/staff" className="nav-link has-dropdown"><i className="fas fa-broom" /><span>Staff</span></Link>
-                        <ul className="dropdown-menu">
-                            <li><Link to="" className="nav-link" href="widget-chart.html">Add Staff</Link></li>
-                        </ul>
-                    </li>
-                    <li className="dropdown">
-                    <Link to ="/staff" className="nav-link has-dropdown"><i className="fas fa-broom" /><span>Visitors</span></Link>
-                        <ul className="dropdown-menu">
-                            <li><Link to= "" className="nav-link" href="widget-chart.html">Add Visitors</Link></li>
-                        </ul>
-                    </li>
-                    <li>
-                    <Link href="/staff" className="nav-link"><i className="fas fa-broom" /><span>Schedule</span></Link>
-                    </li>
-                    <li>
-                    <Link to="" className="nav-link" onClick= {this.Logout}><i className="fas fa-broom" /><span>Logout</span></Link>
-                    </li>
-                </ul>
-                </aside>
-            </div>
-        </div>
+            
+<div class="main-sidebar sidebar-style-2">
+        <aside id="sidebar-wrapper">
+          <div class="sidebar-brand">
+            <a href="index.html">
+            
+              <span class="logo-name">FRONTDESK MS</span>
+            </a>
+          </div>
+          <ul class="sidebar-menu">
+            <li class="menu-header">Main</li>
+            <li class="dropdown">
+              <a href="/" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a>
+            </li>
+            <li class="dropdown active">
+              <a href="#" class="nav-link has-dropdown"><i class="fas fa-broom"></i><span>Staff</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="/createstaff">Add Staff</a></li>
+                <li class="active"><a class="nav-link" href="/staff">View Staff</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="nav-link has-dropdown"><i class="fab fa-accusoft"></i><span>Visitors</span></a>
+              <ul class="dropdown-menu">
+                <li><a class="nav-link" href="/createvisitor">Add Visitors</a></li>
+                <li><a class="nav-link" href="/visitor">View Visitors</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+            <Link to="" className="nav-link" onClick= {this.Logout}><i className="fas fa-broom" /><span>Logout</span></Link>
+            </li>
+          </ul>
+        </aside>
+      </div>
         );
     }
 }
-export default withRouter(SideNavigation);
+
+export default SideNavigation;

@@ -9,10 +9,17 @@ constructor(props) {
     this.state = {
       email: '',
       password: '',
+      loading: '',
+      emailValid: false,     
+      textValid: false, 
+      submitDisabled: true 
     };
 }
 
 handleClick = e => {
+  this.setState({
+    loading: true
+  });
   e.preventDefault();
   let formData = new FormData();    
 
@@ -23,19 +30,40 @@ handleClick = e => {
 axios.post('login', formData)
 .then(res => {
   localStorage.setItem('token', res.data.data.token)
+  this.setState({loading: false});  
       const { history } = this.props;
         history.push("/dashboard")
 })
 .catch(err => {
-
+  this.setState({
+    loading:false
+})
 })
 }
-handleChange = e =>{
-  this.setState({
-        [e.target.name]:e.target.value
-      })
-}
+// handleChange = e =>{
+//   this.setState({
+//         [e.target.name]:e.target.value
+//       })
+// }
+handleEmailChange = event => {
+  let emailValid = event.target.value ? true : false;       
+  let submitValid = this.state.textValid && emailValid
+   this.setState({
+       email: event.target.value,
+       emailValid: emailValid, 
+       submitDisabled: !submitValid});
+ }
+ handlePasswordChange = event => {
+  let textValid = event.target.value ? true : false; 
+  let submitValid = this.state.emailValid && textValid
+   this.setState({
+       password: event.target.value,
+       textValid: textValid, 
+       submitDisabled: !submitValid
+  });
+ }
     render() {
+      const {loading} = this.state;
         return (
 <div id="app">
   <section className="section">
@@ -50,7 +78,7 @@ handleChange = e =>{
               <form className="needs-validation" onSubmit={this.handleClick} noValidate>
                 <div className="form-group">
                   <label htmlFor="email">Email</label>
-                  <input id="email" type="email" className="form-control" name="email" tabIndex={1} onChange={this.handleChange} required autofocus/>
+                  <input id="email" type="email" className="form-control" name="email" tabIndex={1} value={this.state.email} onChange={this.handleEmailChange} required autofocus/>
                   <div className="invalid-feedback">
                     Please fill in your email
                   </div>
@@ -64,7 +92,7 @@ handleChange = e =>{
                       </Link>
                     </div>
                   </div>
-                  <input id="password" type="password" className="form-control" name="password" tabIndex={2} onChange={this.handleChange} required />
+                  <input id="password" type="password" className="form-control" name="password" tabIndex={2} value={this.state.password} onChange={this.handlePasswordChange} required />
                   <div className="invalid-feedback">
                     please fill in your password
                   </div>
@@ -76,7 +104,12 @@ handleChange = e =>{
                   </div>
                 </div>
                 <div className="form-group">
-                  <input type="submit" value="Login" className="btn btn-primary btn-lg btn-block" tabIndex={4}/>
+                  <button type="submit" value="Login" className="btn btn-primary btn-lg btn-block" tabindex="4" disabled={loading, this.state.submitDisabled}>
+                    { loading &&  <div className="spinner-border" role="status"></div>}
+                      {/* { loading && <span className="radious" style={{color:"white"}}>Logging in..</span>} */}
+                      { !loading && <span style={{color:"white"}}>Login</span>}
+                  </button>
+                  {/* <input type="submit" value="Login" className="btn btn-primary btn-lg btn-block" tabIndex={4}/> */}
                 </div>
               </form>
               <div className="text-center mt-4 mb-3">

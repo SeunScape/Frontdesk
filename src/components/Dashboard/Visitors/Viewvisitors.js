@@ -3,12 +3,12 @@ import Navbar from '../Navbar/Navbar';
 import SideNavigation from '../SideNav/SideNavigation';
 import axios from 'axios';
 
-class Viewstaff extends React.Component {
+class Viewvisitors extends React.Component {
 constructor(props) {
     super(props);
 
     this.state = {
-        staff: []
+        visitor: []
     };
 }
 componentDidMount(){
@@ -18,10 +18,10 @@ componentDidMount(){
         }
     };
     const rest = this.props.match.params.id;
-   axios.get(`staff/${rest}`, config).then(
+   axios.get(`visitors/${rest}`, config).then(
         res => {
             this.setState({
-                staff:res.data.data,
+                visitor:res.data.data,
             })
             // console.log(res.data)
         },
@@ -32,7 +32,7 @@ componentDidMount(){
 
 
     render() {
-        const {staff} = this.state
+        const {visitor} = this.state
         return (
             <div className="main-wrapper main-wrapper-1">
                 <Navbar/>
@@ -46,8 +46,8 @@ componentDidMount(){
                 </div>
                 <div className="section-header-breadcrumb">
                     <div className="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div className="breadcrumb-item"><a href="#">Staff</a></div>
-                    <div className="breadcrumb-item">View Staff</div>
+                    <div className="breadcrumb-item"><a href="#">Visitors</a></div>
+                    <div className="breadcrumb-item">View Visitor</div>
                 </div>
                 </div>
                 <div className="col-12 col-md-12 col-lg-4 mx-auto">
@@ -57,17 +57,14 @@ componentDidMount(){
                             <img alt="image" src="/assets/img/users/user-1.png" className="rounded-circle author-box-picture" />
                             <div className="clearfix" />
                             <div className="author-box-name">
-                            <h4>Name: {staff.name}</h4>
+                            <h4>Name: {visitor.name}</h4>
                             </div>
-                            <div className="author-box-job">Position: {staff.position}</div>
+                            <div className="author-box-job">occupation: {visitor.occupation}</div>
                         </div>
                         <div className="text-center">
                             <div className="author-box-description">
-                                <p><p>Salary: {staff.salary}</p></p>
-                                <p>Position: {staff.position}</p>
-                                <p>Phone: {staff.phone}</p>
-                                <p>Start date: {staff.start_date}</p>
-                                <p>Address: {staff.address}</p>
+                                <p><p>Email: {visitor.email}</p></p>
+                                <p>Phone: {visitor.phone}</p>
                             </div>
                         </div>
                         </div>
@@ -80,4 +77,4 @@ componentDidMount(){
     }
 }
 
-export default Viewstaff;
+export default Viewvisitors;
