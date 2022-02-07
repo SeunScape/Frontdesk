@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 class SideNavigation extends React.Component {
 constructor(props) {
     super(props);
@@ -29,21 +29,21 @@ Logout =() => {
               <a href="/" class="nav-link"><i class="fas fa-home"></i><span>Dashboard</span></a>
             </li>
             <li class="dropdown active">
-              <a href="#" class="nav-link has-dropdown"><i class="fas fa-broom"></i><span>Staff</span></a>
+              <a href="#" class="nav-link has-dropdown"><i class="fas fa-briefcase"></i><span>Staff</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="/createstaff">Add Staff</a></li>
                 <li class="active"><a class="nav-link" href="/staff">View Staff</a></li>
               </ul>
             </li>
-            <li class="dropdown">
-              <a href="#" class="nav-link has-dropdown"><i class="fab fa-accusoft"></i><span>Visitors</span></a>
+            <li class="dropdown active">
+              <a href="#" class="nav-link has-dropdown"><i class="fas fa-id-card"></i><span>Visitors</span></a>
               <ul class="dropdown-menu">
                 <li><a class="nav-link" href="/createvisitor">Add Visitors</a></li>
                 <li><a class="nav-link" href="/visitor">View Visitors</a></li>
               </ul>
             </li>
             <li class="dropdown">
-            <Link to="" className="nav-link" onClick= {this.Logout}><i className="fas fa-broom" /><span>Logout</span></Link>
+            <Link to="" className="nav-link" onClick= {this.Logout}><i class="fas fa-sign-out-alt"></i><span>Logout</span></Link>
             </li>
           </ul>
         </aside>
@@ -52,4 +52,4 @@ Logout =() => {
     }
 }
 
-export default SideNavigation;
+export default withRouter(SideNavigation);

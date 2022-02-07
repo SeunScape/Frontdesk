@@ -34,14 +34,6 @@ class Visitors extends React.Component {
                 this.setState({
                     users:res.data.data,
                     isLoading: false,
-                    // name: res.data.data[0].name,
-                    // email: res.data.data[0].email,
-                    // position: res.data.data[0].position,
-                    // phone: res.data.data[0].phone,
-                    // address: res.data.data[0].address,
-                    // salary: res.data.data[0].salary,
-                    // date: res.data.data[0].date,
-                    // id: res.data.data[0].id,
                 })
                 console.log( res.data.data)
             },
@@ -148,7 +140,7 @@ class Visitors extends React.Component {
                 <div className="main-content">
                 <section className="section">
                 <div className="section-header">
-                <h1>Staff</h1>
+                <h1>Visitors</h1>
                 <div className="section-header-button">
                     <Link to="createstaff" className="btn btn-primary">Add New</Link>
                 </div>

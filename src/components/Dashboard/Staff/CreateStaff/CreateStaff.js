@@ -42,8 +42,9 @@ handleItemClick =e =>{
             res => {
                 const { history } = this.props;
                 history.push("/staff")
+                console.log(res)
             }).catch(error => {
-                
+                console.log(error)
             })
 }
 handleItemChange = e =>{
@@ -67,8 +68,8 @@ handleItemChange = e =>{
                             <h1>Create New Post</h1>
                             <div className="section-header-breadcrumb">
                             <div className="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                            <div className="breadcrumb-item"><a href="#">Posts</a></div>
-                            <div className="breadcrumb-item">Create New Post</div>
+                            <div className="breadcrumb-item"><a href="#">Staff</a></div>
+                            <div className="breadcrumb-item">Create New Staff</div>
                             </div>
                         </div>
                         <div className="section-body">
@@ -146,7 +147,7 @@ handleItemChange = e =>{
                                     <div className="form-group row mb-4">
                                     <label className="col-form-label text-md-right col-12 col-md-3 col-lg-3" />
                                     <div className="col-sm-12 col-md-7">
-                                        <button className="btn btn-primary">Create Post</button>
+                                        <button className="btn btn-primary">Create Staff</button>
                                     </div>
                                     </div>
                                 </form>

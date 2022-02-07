@@ -54,7 +54,7 @@ componentDidMount(){
           // console.log( res.data.data)
       },
       err => {
-          this.setState({isError: true, isLoading: false})
+          this.setState({isError: true, isLoading: true})
       }
  )
  axios.get('visitors/count', config).then(
@@ -63,10 +63,10 @@ componentDidMount(){
         vcount: res.data.data,
         isLoading: false,
     })
-    // console.log( res.data.data)
+    console.log( res.data.data)
 },
 err => {
-    this.setState({isError: true, isLoading: false})
+    this.setState({isError: true, isLoading: true})
 }
 )
     }
@@ -107,14 +107,9 @@ renderFuckingRows = () => {
       const {users,isLoading, isError, count, vcount} = this.state
         return isLoading
         ?(
-          <div className="main-wrapper main-wrapper-1">
-          <Navbar/>
-          <SideNavigation/>
-          <div className="main-content">
+          <div>
           <div class="loader"></div>
           </div>
-          </div>
-
         ): (
     <div>
     <div id="app">
@@ -248,19 +243,8 @@ renderFuckingRows = () => {
                   <div className="card-body">
                     <h4 className="header-title">Total staff number</h4>
                     <p className="text-muted">{count.count}</p>
-                    <h2 className="mb-3"><i className="mdi mdi-currency-usd text-primary" />$1,65,203</h2>
-                    <div className="row mb-1">
-                      <div className="col-6">
-                        <p className="text-muted mb-1">This Month</p>
-                        <h3 className="mt-0 font-20">$117,968
-                        </h3>
-                      </div>
-                      <div className="col-6">
-                        <p className="text-muted mb-1">Last Month</p>
-                        <h3 className="mt-0 font-20">$74,568
-                        </h3>
-                      </div>
-                    </div>
+                    <h4 className="header-title">Total visitors number</h4>
+                    <p className="text-muted">{vcount.count}</p>
                     <div className="mt-1">
                       <div className="recent-report__chart">
                         <div id="chart2" />

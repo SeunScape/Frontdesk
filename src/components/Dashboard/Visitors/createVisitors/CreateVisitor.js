@@ -63,11 +63,11 @@ handleItemClick =e =>{
         })
         .then(
             res => {
-                // const { history } = this.props;
-                // history.push("/visitors")
-                console.log(res)
+                const { history } = this.props;
+                history.push("/visitors")
+                // console.log(res)
             }).catch(error => {
-                console.log(error)
+                // console.log(error)
             })
 }
 handleItemChange = e =>{
@@ -150,7 +150,7 @@ handleItemChange = e =>{
                             <h1>Create New Visitor</h1>
                             <div className="section-header-breadcrumb">
                             <div className="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                            <div className="breadcrumb-item"><a href="#">Posts</a></div>
+                            <div className="breadcrumb-item"><a href="#">Visitors</a></div>
                             <div className="breadcrumb-item">Create New Visitor</div>
                             </div>
                         </div>
